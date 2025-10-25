@@ -1,7 +1,10 @@
-__pycache__
-
-blog-env
-
-.DS_Store
-
+blog-env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.git
 .env
+.coverage
+.pytest_cache
