@@ -22,15 +22,22 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return password_hash.hash(password=password)
 
-
-def authenticate(request: AuthUser,  session: SessionDep):
+def authenticate(request: AuthUser, session: SessionDep):
     user = session.exec(select(User).where(User.email == request.username)).first()
+    
     if not user:
-        raise False
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
     if not verify_password(request.password, user.password):
-         raise False
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password"
+        )
+    
     return user
-
 
 def create_access_token(data: dict):
     to_encode = data.copy()

@@ -1,33 +1,36 @@
-import requests
+import json
+from fastapi.testclient import TestClient
+from main import app
 
-headers = {'Content-Type': 'application/json'}
+client = TestClient(app)
 
 def test_authenticate():
     """
-        Test the login process works by making post request and compare
-        the status code and response 's body against the expected value
+    Test The login using FastAPI
     """
     #Test 1: Correct Credentials
-    response = requests.post('http://localhost:8000/login', json={
-        "email": "admin@kolarel.com",
+    response = client.post('/login', data={
+        "username": "admin@kolarel.com",
         "password": "1515"
-    }, headers=headers)
+    })
 
+    print(f"Response Text: {response.text}")
     assert response.status_code == 200
-    assert response.json()['name'] == 'Alexandre Paul'
+    assert json.loads(response.text)['token_type']  == "bearer"
+    
 
     #Test 2: Unregistered email
-    response2 = requests.post('http://localhost:8000/login', json={
-        "email": "alex@kolarel.com",
+    response2 = client.post('/login', data={
+        "username": "alex@kolarel.com",
         "password": "1515"
-    }, headers=headers)
+    })
     assert response2.status_code == 404
 
     #Test 3: Incorrect password
-    response3 = requests.post('http://localhost:8000/login', json={
-        "email": "admin@kolarel.com",
+    response3 = client.post('/login', data={
+        "username": "admin@kolarel.com",
         "password": "1015"
-    }, headers=headers)
+    })
 
-    assert response3.status_code == 200
-    assert response3.json() == False
+    assert response3.status_code == 401
+    assert json.loads(response3.text)['detail']  == "Incorrect password"
