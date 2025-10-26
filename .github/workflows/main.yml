@@ -16,6 +16,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Continuous Integration
+    env:
+      DATABASE_URL: sqlite:///blog.db
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: HS256
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
