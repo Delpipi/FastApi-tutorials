@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  fastapi-tutorials:
+    image: alexandrepaulkouame/fastapi-tutorials:latest
+    container_name: fastapi-tutorials
+    ports:
+      - "8000:80"
+    environment:
+      - DATABASE_URL: ${DATABASE_URL}
+      - SECRET_KEY: ${SECRET_KEY}
+      - ALGORITHM: ${ALGORITHM}
+    restart: unless-stopped
+    volumes:
+      - ./blog.db:/app/blog.db

@@ -92,7 +92,14 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            docker pull alexandrepaulkouame/fastapi-tutorials:latest
-            docker stop fastapi-tutorials || true
-            docker rm fastapi-tutorials || true
-            docker run --env-file .env -d --name fastapi-tutorials -p 8000:80 alexandrepaulkouame/fastapi-tutorials:latest
+            cd ~/fastapi-tutorials
+
+            cat > .env << EOF
+            DATABASE_URL: sqlite:///blog.db
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+            ALGORITHM: HS256
+            EOF
+
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
