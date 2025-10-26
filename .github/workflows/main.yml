@@ -55,7 +55,7 @@ jobs:
       - name: Upload Trivy scan results as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: trivy-results
+          name: trivy-result
           path: trivy-result.json
 
   docker_build:
