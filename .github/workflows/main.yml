@@ -94,7 +94,7 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script: mkdir -p /root/fastapi-tutorials
+        script: mkdir -p /root/projects/fastapi-tutorials
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
@@ -103,7 +103,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "docker-composer.yml"
-          target: "/root/fastapi-tutorials"
+          target: "/root/projects/fastapi-tutorials"
 
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
@@ -112,7 +112,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /root/fastapi-tutorials
+            cd /root/projects/fastapi-tutorials
 
             cat > .env << EOF
             DATABASE_URL=sqlite:///blog.db
