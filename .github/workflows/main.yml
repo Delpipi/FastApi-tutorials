@@ -102,7 +102,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml"
+          source: "./docker-compose.yml"
           target: "/root/projects/fastapi-tutorials"
 
       - name: Deploy using ssh
