@@ -91,10 +91,10 @@ jobs:
       - name: Create directory on server
         uses: appleboy/ssh-action@master
         with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: mkdir -p /root/projects/fastapi-tutorials
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: mkdir -p /root/projects/fastapi-tutorials
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
@@ -102,7 +102,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-composer.yml"
+          source: "docker-compose.yml"
           target: "/root/projects/fastapi-tutorials"
 
       - name: Deploy using ssh
@@ -116,7 +116,7 @@ jobs:
 
             cat > .env << EOF
             DATABASE_URL=sqlite:///blog.db
-            SECRET_KE=${{ secrets.SECRET_KEY }}
+            SECRET_KEY=${{ secrets.SECRET_KEY }}
             ALGORITHM=HS256
             EOF
 
