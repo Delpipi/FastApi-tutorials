@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 class MainBlog(BaseModel):
+    id: int
     title: str
     body: str
 
